@@ -17,6 +17,9 @@ const TaiKhoanSchema = new Schema({
     },
     _congviecdadang: {
         type: [{ type: Schema.Types.ObjectId, ref: 'CongViec' }]
+    },
+    _congviecdanop: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'CongViec' }]
     }
 });
 

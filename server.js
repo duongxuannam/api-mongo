@@ -33,8 +33,8 @@ app.get('/', (req, res) => {
 
 //lay danh sasch
 app.get('/congviec', (req, res) => {
-    CongViec.find().then((congviec) => {
-        res.send({ congviec });
+    CongViec.find().count().then((congviec) => {
+        res.send(  {congviec} );
     }, e => {
         res.status(400).send(e);
     });
@@ -62,10 +62,12 @@ app.get('/congviec/:id', (req, res) => {
 app.post('/congviec', (req, res) => {
     //tao va luu cong viec
     const congviec = new CongViec({
+        tencongty: req.body.tencongty,
         tieude: req.body.tieude,
         soluong: req.body.soluong,
         mieuta: req.body.mieuta,
         diadiem: req.body.diadiem,
+        chuyennganh: req.body.chuyennganh,
         _nguoidang: req.body._nguoidang
     });
     console.log(congviec)
@@ -79,6 +81,9 @@ app.post('/congviec', (req, res) => {
         res.status(400).send(e);
     })
 });
+
+
+
 
 //them 1 tai khoan
 app.post('/taikhoan', (req, res) => {
@@ -113,6 +118,17 @@ app.get('/testtimviec/:id', (req, res) => {
     });
 });
 
+//tim viec theo dia diem
+
+app.get('/testtimviecdiadiem', (req, res) => {
+    
+        CongViec.find({ 'diadiem': /Binh/}).populate('_nguoidang').exec(function (err, cv) {
+            if (err) throw err;
+            console.log(cv);
+            res.send(cv);
+        });
+    });
+
 
 ///lay tai khoan theo id
 
@@ -127,9 +143,28 @@ app.get('/testtimnguoi/:id', (req, res) => {
 
 
 
+//them nguoi theo doi
+app.get('/themnguoitheodoi', (req, res) => {
+   
+        TaiKhoan.update({ _id: '5a5d55c4c9532a05ccfe051c' }, { $push: { _congviecdanop: '5a5d6c9426e21714384ff1e6' } }, (err, cv) => {
+            console.log(cv)
+            res.send({ thongbao: "ok" });
+        });
+
+    }, (e) => {
+        res.status(400).send(e);
+    });
 
 
 
+
+    //lay 3 cong viec trang chu
+
+    app.get('/trangchu', (req, res) => {
+        CongViec.find({ }).sort({date: -1}).limit(3).then((data)=>{
+            res.send(data);
+        })
+    });
 
 
 //chay server
