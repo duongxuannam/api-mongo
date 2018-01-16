@@ -24,13 +24,21 @@ const CongViecSchema = new Schema({
         type: String,
         trim: true,
     },
+    _nguoidang: {
+      
+            type: Schema.Types.ObjectId,
+            ref: 'TaiKhoan',
+            required: true,
+       
+
+    },
 });
 
 CongViecSchema.methods.toJSON = function () {
     const congviec = this;
     const congviecObject = congviec.toObject();
     //ham pick lodashg chi lay 1 so thuoc tinh cua object
-    return _.pick(congviecObject, ['_id', 'tieude', 'soluong', 'mieuta', 'diadiem']);
+    return _.pick(congviecObject, ['_id', 'tieude', 'soluong', 'mieuta', 'diadiem', '_nguoidang']);
 };
 
 const CongViec = mongoose.model('CongViec', CongViecSchema);
