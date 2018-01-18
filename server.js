@@ -161,7 +161,7 @@ app.get('/themnguoitheodoi', (req, res) => {
     //lay 3 cong viec trang chu
 
     app.get('/trangchu', (req, res) => {
-        CongViec.find({ }).sort({date: -1}).limit(3).then((data)=>{
+        CongViec.find().sort({ngaydang: -1}).limit(3).then((data)=>{
             res.send(data);
         })
     });
