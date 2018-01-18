@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 //lay danh sasch
 app.get('/congviec', (req, res) => {
     CongViec.find().count().then((congviec) => {
-        res.send(  {tongcongviec2: congviec} );
+        res.send(  {tongcongviec3: congviec} );
     }, e => {
         res.status(400).send(e);
     });
