@@ -35,7 +35,7 @@ const CongViecSchema = new Schema({
     },
     ngaydang: {
         type: Date, 
-        default: Date.now
+        default:  new Date()
     },
     luotxem:{
         type: Number,

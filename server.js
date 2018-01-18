@@ -166,6 +166,21 @@ app.get('/themnguoitheodoi', (req, res) => {
         })
     });
 
+//lay danh sach cong viec
+app.get('/tcdanhsachcongviec/', (req, res) => {
+    CongViec.find().sort({ngaydang: -1}).then((data)=>{
+        res.send(data);
+    })
+});
+   
+    //lay danh sach cong viec
+    app.get('/danhsachcongviec/:sotrang', (req, res) => {
+        const skip = (req.params.sotrang - 1) * 5;
+        CongViec.find().sort({ngaydang: -1}).limit(5).skip(skip).then((data)=>{
+            res.send(data);
+        })
+    });
+
 
 //chay server
 app.listen(PORT, () => console.log('from 1995 with love'))
