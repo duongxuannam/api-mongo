@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { mongoose } = require('./app/models/db');
 const { CongViec } = require('./app/models/CongViec');
 const { TaiKhoan } = require('./app/models/TaiKhoan');
-const path = require('path')
+const path = require('path');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -11,8 +11,6 @@ app.use(bodyParser.json());
 
 //khai bao port
 const PORT = process.env.PORT || 1995;
-
-
 
 
 
@@ -32,7 +30,7 @@ app.get('/', (req, res) => {
 // const hinh = require('./public/logobu.jpg')
 app.get('/testcaihinh', function(req, res){
     // res.sendFile(path.resolve(__dirname, './public/dangnhap.png'));
-    res.send( {'duong dan ne hihi': path.resolve(__dirname, './public/dangnhap.png')})
+    res.send( {'duong dan ne hihi': __dirname})
 })
 
 //test lay tong danh sasch cong viec
