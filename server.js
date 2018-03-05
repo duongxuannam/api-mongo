@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { mongoose } = require('./app/models/db');
 const { CongViec } = require('./app/models/CongViec');
 const { TaiKhoan } = require('./app/models/TaiKhoan');
+const path = require('path')
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,6 +28,13 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.send('ahihi');
 });
+//test gui hinh
+// const hinh = require('./public/logobu.jpg')
+app.get('/testcaihinh', function(req, res){
+    // res.sendFile(path.resolve(__dirname, './public/dangnhap.png'));
+    res.send( {'duong dan ne hihi': path.resolve(__dirname, './public/dangnhap.png')})
+})
+
 //test lay tong danh sasch cong viec
 app.get('/tatcacongviec', (req, res) => {
     CongViec.find().count().then((congviec) => {
