@@ -34,14 +34,14 @@ const CongViecSchema = new Schema({
         type: String,
     },
     ngaydang: {
-        type: Date, 
-        default:  new Date()
+        type: Date,
+        default: new Date()
     },
-    luotxem:{
+    luotxem: {
         type: Number,
         default: 0
     },
-    danop:{
+    danop: {
         type: Number,
         default: 0
     },
@@ -54,10 +54,12 @@ const CongViecSchema = new Schema({
 
     },
     _taikhoandanop: {
-        
-                type: Schema.Types.ObjectId,
-                ref: 'TaiKhoan',
-            },
+        type: Schema.Types.ObjectId,
+        ref: 'TaiKhoan',
+    },
+    hinhanh: {
+        type: String
+    }
 });
 
 // CongViecSchema.methods.toJSON = function () {

@@ -11,16 +11,30 @@ const TaiKhoanSchema = new Schema({
         minlength: 1,
         unique: true,//duy nhat
     },
+    matkhau:{
+        type: String
+    },
     hoten: {
         type: String,
-        required: true,
     },
     _congviecdadang: {
         type: [{ type: Schema.Types.ObjectId, ref: 'CongViec' }]
     },
     _congviecdanop: {
         type: [{ type: Schema.Types.ObjectId, ref: 'CongViec' }]
-    }
+    },
+    // tokens: [{
+    //     access: {
+    //         type: String,
+    //         required: true
+    //     },
+    //     token: {
+    //         type: String,
+    //         required: true
+    //     }
+    // }]
+        
+
 });
 
 TaiKhoanSchema.methods.toJSON = function () {
