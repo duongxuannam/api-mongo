@@ -152,7 +152,10 @@ app.post('/dangnhap', (req, res) => {
     if(!matkhau){
        return res.send({"loi":"chua nhap du lieu"});
     };
-    TaiKhoan.findOne({ email: req.body.email }).exec(function (err, taikhoan) { 
+    TaiKhoan.findOne({ email: req.body.email }).exec(function (err, taikhoan) {
+        if(!taikhoan){
+            return res.send({"loi":"email chua chinh xasc"});
+        } 
         bcrypt.compare( req.body.matkhau, taikhoan.matkhau, (err, result) => {
             if (result) {
                 res.send({ taikhoan });
