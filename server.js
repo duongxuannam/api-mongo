@@ -153,7 +153,7 @@ app.post('/dangnhap', (req, res) => {
             if (result) {
                 res.send({ taikhoan });
             } else {
-             res.status(400).send({"Loi":"sai mat khau"});
+             res.status(400).send({"loi":"sai mat khau"});
             }
           });
     });
