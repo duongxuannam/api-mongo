@@ -150,7 +150,7 @@ app.post('/taikhoan', (req, res) => {
 app.post('/dangnhap', (req, res) => {
     const { email, matkhau } = req.body
     if(!matkhau){
-       return res.status(400).send({"loi":"chua nhap du lieu"});
+       return res.send({"loi":"chua nhap du lieu"});
         
     }
     TaiKhoan.findOne({ email: req.body.email }).exec(function (err, taikhoan) { 
@@ -158,7 +158,7 @@ app.post('/dangnhap', (req, res) => {
             if (result) {
                 res.send({ taikhoan });
             } else {
-             res.status(400).send({"loi":"sai mat khau"});
+             res.send({"loi":"sai mat khau"});
             }
           });
     });
