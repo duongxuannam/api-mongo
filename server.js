@@ -150,17 +150,17 @@ app.post('/taikhoan', (req, res) => {
 app.post('/dangnhap', (req, res) => {
     const { email, matkhau } = req.body
     if(!matkhau){
-       return res.status(204).send();
+       return res.status(204);
     };
     TaiKhoan.findOne({ email: req.body.email }).exec(function (err, taikhoan) {
         if(!taikhoan){
-            return res.status(204).send();
+            return res.status(204);
         } 
         bcrypt.compare( req.body.matkhau, taikhoan.matkhau, (err, result) => {
             if (result) {
                 res.send({ taikhoan });
             } else {
-                return res.status(204).send();
+                return res.status(204);
             }
           });
     });
