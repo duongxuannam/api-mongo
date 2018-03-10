@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cloudinary = require('cloudinary');
+const bcrypt = require('bcryptjs');
 const { mongoose } = require('./app/models/db');
 const { CongViec } = require('./app/models/CongViec');
 const { TaiKhoan } = require('./app/models/TaiKhoan');
@@ -33,52 +34,52 @@ const PORT = process.env.PORT || 1995;
 //       crop: 'limit',
 //       width: 2000,
 //       height: 2000,                             
-     
+
 //     }      
 //   )
 //------------------------xóa 1 hình, muốn edit thì cứ đặt tên trùng thôi
 // cloudinary.uploader.destroy('qfjixtwodb2oumqocnam', function(result) { console.log(result) });
 
 
-cloudinary.uploader.upload(
-    "./cty2.jpg",
-    function(result) { console.log(result); },
-    {
-      public_id: 'cty2',                     
-     
-    }      
-  )
+// cloudinary.uploader.upload(
+//     "./cty2.jpg",
+//     function(result) { console.log(result); },
+//     {
+//       public_id: 'cty2',                     
 
-  cloudinary.uploader.upload(
-    "./cty3.jpg",
-    function(result) { console.log(result); },
-    {
-      public_id: 'cty3',                     
-     
-    }      
-  )
-  cloudinary.uploader.upload(
-    "./cty1.jpg",
-    function(result) { console.log(result); },
-    {
-      public_id: 'cty1',                     
-     
-    }      
-  )
+//     }      
+//   )
+
+//   cloudinary.uploader.upload(
+//     "./cty3.jpg",
+//     function(result) { console.log(result); },
+//     {
+//       public_id: 'cty3',                     
+
+//     }      
+//   )
+//   cloudinary.uploader.upload(
+//     "./cty1.jpg",
+//     function(result) { console.log(result); },
+//     {
+//       public_id: 'cty1',                     
+
+//     }      
+//   )
 //--- gui thu cai hinh
 app.get('/cloudinary', (req, res) => {
-    res.send({'aa':cloudinary.image("default.jpg", { alt: "Sample Image" })});
+    res.send({ 'aa': cloudinary.image("default.jpg", { alt: "Sample Image" }) });
 });
 //middleware
 app.use((req, res, next) => {
     console.log('middleware ne');
     next();
 });
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
 
 //----------------------------------------test------------------------
@@ -130,15 +131,33 @@ app.post('/taikhoan', (req, res) => {
         hoten: req.body.hoten,
         matkhau: req.body.matkhau
     });
-    console.log(taikhoan)
-    taikhoan.save().then((doc) => {
-        res.send({ thongbao: "ok" });
-    }, (e) => {
-        res.status(400).send(e);
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(taikhoan.matkhau, salt, (err, hash) => {
+            taikhoan.matkhau = hash;
+            console.log(taikhoan)
+            taikhoan.save().then((doc) => {
+                res.send({ thongbao: "ok" });
+            }, (e) => {
+                res.status(400).send(e);
+            });
+        });
     });
+
 });
 
 
+//dang nhap
+app.post('/dangnhap', (req, res) => {
+    TaiKhoan.findOne({ email: req.body.email }).exec(function (err, taikhoan) { 
+        bcrypt.compare( req.body.matkhau, taikhoan.matkhau, (err, result) => {
+            if (result) {
+                res.send({ taikhoan });
+            } else {
+             res.status(400).send({"Loi":"sai mat khau"});
+            }
+          });
+    });
+});
 
 
 

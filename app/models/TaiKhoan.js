@@ -37,11 +37,13 @@ const TaiKhoanSchema = new Schema({
 
 });
 
+
+
 TaiKhoanSchema.methods.toJSON = function () {
     const taikhoan = this;
     const taikhoanObject = taikhoan.toObject();
     //ham pick lodashg chi lay 1 so thuoc tinh cua object
-    return _.pick(taikhoanObject, ['_id', 'email', 'hoten','_congviecdadang','_congviecdanop']);
+    return _.pick(taikhoanObject, ['_id', 'email', 'hoten','_congviecdadang','_congviecdanop'], 'matkhau');
 };
 
 const TaiKhoan = mongoose.model('TaiKhoan', TaiKhoanSchema);
