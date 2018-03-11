@@ -125,18 +125,19 @@ app.get('/testcongviec/:id', (req, res) => {
 
 
 //them 1 tai khoan
-app.post('/taikhoan', (req, res) => {
+app.post('/dangky', (req, res) => {
     const taikhoan = new TaiKhoan({
         email: req.body.email,
         hoten: req.body.hoten,
-        matkhau: req.body.matkhau
+        matkhau: req.body.matkhau,
+        sodienthoai: req.body.sodienthoai
     });
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(taikhoan.matkhau, salt, (err, hash) => {
             taikhoan.matkhau = hash;
             console.log(taikhoan)
             taikhoan.save().then((doc) => {
-                res.send({ thongbao: "ok" });
+                res.send({ taikhoan });
             }, (e) => {
                 res.status(400).send(e);
             });

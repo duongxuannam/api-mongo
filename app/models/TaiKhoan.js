@@ -17,6 +17,9 @@ const TaiKhoanSchema = new Schema({
     hoten: {
         type: String,
     },
+    sodienthoai: {
+        type: String,
+    },
     _congviecdadang: {
         type: [{ type: Schema.Types.ObjectId, ref: 'CongViec' }]
     },
@@ -43,7 +46,7 @@ TaiKhoanSchema.methods.toJSON = function () {
     const taikhoan = this;
     const taikhoanObject = taikhoan.toObject();
     //ham pick lodashg chi lay 1 so thuoc tinh cua object
-    return _.pick(taikhoanObject, ['_id', 'email', 'hoten','_congviecdadang','_congviecdanop'], 'matkhau');
+    return _.pick(taikhoanObject, ['_id', 'email', 'hoten','_congviecdadang','_congviecdanop'], 'matkhau', 'sodienthoai');
 };
 
 const TaiKhoan = mongoose.model('TaiKhoan', TaiKhoanSchema);
