@@ -19,6 +19,50 @@ app.use(bodyParser.json());
 //khai bao port
 const PORT = process.env.PORT || 1995;
 
+// test noti
+
+
+var sendNotification = function(data) {
+    var headers = {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": "Basic MTQ3NDZlY2ItNjEyMC00YzBhLWI5YTctMGQ0YjJkYTM4Mjg5"
+    };
+    
+    var options = {
+      host: "onesignal.com",
+      port: 443,
+      path: "/api/v1/notifications",
+      method: "POST",
+      headers: headers
+    };
+    
+    var https = require('https');
+    var req = https.request(options, function(res) {  
+      res.on('data', function(data) {
+        console.log("Response:");
+        console.log(JSON.parse(data));
+      });
+    });
+    
+    req.on('error', function(e) {
+      console.log("ERROR:");
+      console.log(e);
+    });
+    
+    req.write(JSON.stringify(data));
+    req.end();
+  };
+  
+  var message = { 
+    app_id: "7ac0a1fd-5777-4950-bbf3-f8487fd75582",
+    contents: {"en": "Có tin tức mới"},
+    included_segments: ["All"],
+    headings: {"en": "Thông báo" },
+    url: "http://localhost:3000/chitietcongviec/5a9d2a286199b01f20f853cb"
+
+  };
+  
+  sendNotification(message);
 
 //-----------------------UP HINH LEN CLOUD
 
