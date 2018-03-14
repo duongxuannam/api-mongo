@@ -197,7 +197,6 @@ app.get('/testtimviecdiadiem', (req, res) => {
 
 
 ///lay tai khoan theo id
-
 app.get('/testtimnguoi/:id', (req, res) => {
 
     TaiKhoan.findOne({ _id: req.params.id }).populate('_congviecdadang').exec(function (err, cv) {
@@ -220,6 +219,31 @@ app.get('/themnguoitheodoi', (req, res) => {
 }, (e) => {
     res.status(400).send(e);
 });
+
+
+//---------------------------------nop ung tuyên
+// app.post('/ungtuyen', (req, res) => {
+//         const { _idCongViec, _idTaiKhoan } = req.body
+//         CongViec.update({ _id: _idCongViec }, { $push: { _danhsachungtuyen: _idTaiKhoan },$inc: { danop: 1 } }, (err, cv) => {
+//             res.send({ thongbao: "ok" });
+//         });
+    
+//     }, (e) => {
+//         res.status(400).send(e);
+//     });
+app.post('/ungtuyen', (req, res) => {
+    const { _idCongViec, _idTaiKhoan } = req.body
+    CongViec.update({ _id: _idCongViec }, { $push: { _danhsachungtuyen: _idTaiKhoan },$inc: { danop: 1 } })
+    .then((result)=>{
+        TaiKhoan.update({ _id: _idTaiKhoan }, { $push: { _congviecdaungtuyen: _idCongViec } }, (err, cv) => {
+            res.send({ thongbao: "ok" });
+        });
+    }, (e) => {
+        res.status(400).send(e);
+    })
+});
+
+
 
 
 /////////////////////CONGVIEC HERE-------------------------

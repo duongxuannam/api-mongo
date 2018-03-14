@@ -53,9 +53,8 @@ const CongViecSchema = new Schema({
 
 
     },
-    _taikhoandanop: {
-        type: Schema.Types.ObjectId,
-        ref: 'TaiKhoan',
+    _danhsachungtuyen: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'CongViec' }]
     },
     hinhanh: {
         type: String
