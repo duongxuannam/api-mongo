@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 1995;
 var sendNotification = function(data) {
     var headers = {
       "Content-Type": "application/json; charset=utf-8",
-      "Authorization": "Basic MTQ3NDZlY2ItNjEyMC00YzBhLWI5YTctMGQ0YjJkYTM4Mjg5"
+      "Authorization": "Basic ODY0YWIxOGItNTY3MC00MzAzLWE5ZDQtZjA4Y2MzMjQ5YjE5"
     };
     
     var options = {
@@ -53,16 +53,32 @@ var sendNotification = function(data) {
     req.end();
   };
   
-  var message = { 
-    app_id: "7ac0a1fd-5777-4950-bbf3-f8487fd75582",
+  var messageWeb = { 
+    app_id: "f4318781-c9c6-4ab2-b805-7975e030c9b9",
     contents: {"en": "Có tin tức mới"},
     included_segments: ["All"],
+    isChromeWeb: true,
     headings: {"en": "Thông báo" },
-    url: "http://localhost:3000/chitietcongviec/5a9d2a286199b01f20f853cb"
+    url: "https://thuctap-web.herokuapp.com/tintuc"
 
   };
+  var messageAndroid = { 
+    app_id: "f4318781-c9c6-4ab2-b805-7975e030c9b9",
+    contents: {"en": "Có tin tức mới"},
+    included_segments: ["All"],
+    isAndroid: true,
+    headings: {"en": "Thông báo" },
   
-  sendNotification(message);
+
+  };
+ // sendNotification(message);
+ // -- them thong bao
+ app.get('/themthongbao', function (req, res) {
+    // res.sendFile(path.resolve(__dirname, './public/dangnhap.png'));
+    sendNotification(messageWeb);
+    sendNotification(messageAndroid);
+    res.send({ 'aa': 'ok'})
+})
 
 //-----------------------UP HINH LEN CLOUD
 
